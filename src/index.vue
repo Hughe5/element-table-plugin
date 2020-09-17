@@ -15,7 +15,7 @@
         </template>
       </el-table-column>
       <template #empty>
-        <img class="empty-img" src="./imgs/empty.png" alt />
+        <img class="empty-img" src="../assets/imgs/empty.png" alt />
         <p class="empty-p">没有内容</p>
       </template>
     </el-table>
