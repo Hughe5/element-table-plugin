@@ -18,7 +18,13 @@
 // main.js
 
 ``` javascript
+import Vue from 'vue'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import myTable from 'element-table-plugin'
+import App from './App.vue'
+
+Vue.use(ElementUI)
 Vue.use(myTable, { // 详见fields
   page: 'page',
   pageSize: 'limit',
@@ -27,9 +33,12 @@ Vue.use(myTable, { // 详见fields
   data: 'data.list', // 取表格数据
   total: 'data.total', // 取总条数
 })
-
 // or
 // Vue.use(myTable)
+
+new Vue({
+  render: h => h(App),
+}).$mount('#app')
 ```
 
 // index.vue
