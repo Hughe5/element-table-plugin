@@ -21,11 +21,11 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import myTable from 'element-table-plugin'
+import elementTable from 'element-table-plugin'
 import App from './App.vue'
 
 Vue.use(ElementUI)
-Vue.use(myTable, { // 详见fields
+Vue.use(elementTable, { // 详见fields
   page: 'page',
   pageSize: 'limit',
   code: 'stat',
@@ -34,7 +34,7 @@ Vue.use(myTable, { // 详见fields
   total: 'data.total', // 取总条数
 })
 // or
-// Vue.use(myTable)
+// Vue.use(elementTable)
 
 new Vue({
   render: h => h(App),
@@ -44,7 +44,7 @@ new Vue({
 // index.vue
 
 ``` html
-<my-table
+<element-table
   :initRequest="request"
   :initColumns="columns"
   :canChangeColumns="canChangeColumns"
@@ -55,7 +55,7 @@ new Vue({
     <template #buttons>
       <el-button type="primary" @click="export">导出</el-button>
     </template>
-</my-table>
+</element-table>
 
 <script>
 export default {

@@ -1,5 +1,5 @@
 <template>
-  <div class="my-table">
+  <div class="element-table">
     <slot name="buttons"></slot>
     <el-table border :data="data" max-height="600" v-loading="loading">
       <el-table-column v-for="(item, index) in columns" :key="index" align="center" :prop="item.prop" :label="item.label" :fixed="item.fixed" :width="item.width" :sortable="item.sortable">
@@ -38,7 +38,7 @@ const defaultConfig = {
   },
 }
 export default {
-  name: 'my-table',
+  name: 'element-table',
   props: {
     initRequest: {
       type: Object,
@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     getFields () {
-      const {columns, data} = this
+      const { columns, data } = this
       return {
         columns,
         data,
@@ -175,7 +175,7 @@ export default {
     -ms-user-select: none;
     user-select: none;
   }
-  .my-table {
+  .element-table {
     .el-table__header {
       background-color: #e8eaef;
       tr,
