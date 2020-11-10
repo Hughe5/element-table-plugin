@@ -1,7 +1,7 @@
-import myTable from './index.vue'
+import elementTable from './index.vue'
 
-myTable.install = function (Vue, options) {
-  Vue.component(myTable.name, myTable)
+elementTable.install = function (Vue, options) {
+  Vue.component(elementTable.name, elementTable)
   if (options && Object.prototype.toString.call(options) === '[object Object]' && Object.keys(options).length) {
     Vue.prototype.$tableConfig = options
   } else {
@@ -9,4 +9,4 @@ myTable.install = function (Vue, options) {
   }
 }
 
-export default myTable
+export default elementTable
