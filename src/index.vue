@@ -1,16 +1,15 @@
 <template>
   <div class="element-table">
-    <slot name="buttons"></slot>
-    <el-table border :data="data" max-height="600" v-loading="loading">
-      <el-table-column v-for="(item, index) in columns" :key="index" align="center" :prop="item.prop" :label="item.label" :fixed="item.fixed" :width="item.width" :sortable="item.sortable">
+    <el-table border :data="data" :max-height="maxHeight" v-loading="loading">
+      <el-table-column show-overflow-tooltip v-for="(item, index) in columns" :key="index" :align="item.align" :prop="item.prop" :label="item.label" :fixed="item.fixed" :width="item.width" :sortable="item.sortable">
         <template slot-scope="scope">
           <slot :name="item.prop" :row="scope.row">
-            <el-popover v-if="item.usePopover && (scope.row[item.prop] || scope.row[item.prop] === 0)" placement="top" width="400" popper-class="popper" trigger="hover">
-              <p style="margin-bottom: 12px;max-height: 160px;overflow: auto;padding: 12px;">{{scope.row[item.prop]}}</p>
-              <el-button style="margin-left: 12px;margin-bottom: 12px;" plain @click="copy(scope.row[item.prop])">复制文本</el-button>
-              <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" slot="reference">{{scope.row[item.prop]}}</div>
+            <el-popover v-if="item.showOverflowPopover && scope.row[item.prop] !== undefined" width="400" popper-class="popper" trigger="hover" placement="top">
+              <p style="margin-bottom: 12px;max-height: 160px;overflow: auto;padding: 12px">{{ scope.row[item.prop] }}</p>
+              <el-button style="margin-left: 12px;margin-bottom: 12px" plain @click="copy(scope.row[item.prop])">复制文本</el-button>
+              <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis" slot="reference">{{ scope.row[item.prop] }}</div>
             </el-popover>
-            <template v-else>{{(scope.row[item.prop] || scope.row[item.prop] === 0) ? scope.row[item.prop] : '—'}}</template>
+            <template v-else>{{ (scope.row[item.prop] === undefined) ? '—' : scope.row[item.prop] }}</template>
           </slot>
         </template>
       </el-table-column>
@@ -19,7 +18,7 @@
         <p class="empty-p">没有内容</p>
       </template>
     </el-table>
-    <el-pagination v-if="initPagination && Number(pagination.total) > Number(pagination.pageSize)" @current-change="changePage" :current-page="Number(pagination.page)" background layout="prev, pager, next, total, jumper" :total="Number(pagination.total)" :page-size="Number(pagination.pageSize)"></el-pagination>
+    <el-pagination v-if="initPagination && Number(pagination.total) > Number(pagination.pageSize)" @current-change="currentChange" :current-page="Number(pagination.page)" background layout="prev, pager, next, total, jumper" :total="Number(pagination.total)" :page-size="Number(pagination.pageSize)"></el-pagination>
   </div>
 </template>
 
@@ -67,6 +66,10 @@ export default {
     initPagination: {
       type: Object,
     },
+    maxHeight: {
+      type: Number,
+      default: 600
+    }
   },
   data () {
     return {
@@ -143,13 +146,11 @@ export default {
         } else if (dataVal) {
           this.$message.error(dataVal)
         }
-      } catch (err) {
-        throw err
       } finally {
         this.loading = false
       }
     },
-    changePage (val) {
+    currentChange (val) {
       this.pagination.page = val
       this.getData()
     },

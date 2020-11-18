@@ -7,7 +7,6 @@
 - 展示静态数据
 - 配置接口，自动请求，展示动态数据
 - 分页、换页
-- 添加与表格相关的操作按钮，如“导出”等
 - 统一的空数据时的展示效果
 - 固定列、排序、设置列的宽度、控制列的展示
 - 自定义列模板
@@ -52,9 +51,6 @@ new Vue({
     <template #action="{row}">
       <span @click="edit(row)">编辑</span>
     </template>
-    <template #buttons>
-      <el-button type="primary" @click="export">导出</el-button>
-    </template>
 </element-table>
 
 <script>
@@ -75,7 +71,7 @@ export default {
         {
           prop: 'desc',
           label: '描述',
-          usePopover: true,
+          showOverflowPopover: true,
         },
         {
           prop: 'create_time',
@@ -95,9 +91,6 @@ export default {
   },
   methods: {
     edit (row) {
-      //
-    },
-    export () {
       //
     },
   },
@@ -148,8 +141,9 @@ export default {
 | - | - | - | - | - |
 | prop | 列的prop，与Element中的一致 | string | true | - |
 | label | 列的label，与Element中的一致 | string | false | - |
+| align | 对齐方式，与Element中的一致 | string | false | - |
 | width | 列的宽，与Element中的一致 | string | false | - |
-| usePopover | 是否用浮层显示单元格的详情 | boolean | false | - |
+| showOverflowPopover | 是否用浮层显示单元格的详情 | boolean | false | - |
 | fixed | 固定列，与Element中的一致 | string &#124; boolean | false | - |
 | sortable | 是否支持排序 | boolean | false | - |
 
@@ -174,6 +168,10 @@ export default {
 | page | 当前页 | number | false | 1 |
 | pageSize | 每页条数 | number | false | 30 |
 | total | 总条目数 | number | false | 0 |
+
+### maxHeight
+
+- 表格的最大高度，与Element中的一致
 
 ## Methods
 
