@@ -1,7 +1,7 @@
 <template>
   <div class="element-table">
     <el-table border :data="data" :max-height="maxHeight" v-loading="loading">
-      <el-table-column show-overflow-tooltip v-for="(item, index) in columns" :key="index" :align="item.align" :prop="item.prop" :label="item.label" :fixed="item.fixed" :width="item.width" :sortable="item.sortable">
+      <el-table-column v-for="(item, index) in columns" :key="index" :align="item.align" :prop="item.prop" :label="item.label" :fixed="item.fixed" :width="item.width" :sortable="item.sortable">
         <template slot-scope="scope">
           <slot :name="item.prop" :row="scope.row">
             <el-popover v-if="item.showOverflowPopover && scope.row[item.prop] !== undefined" width="400" popper-class="popper" trigger="hover" placement="top">
@@ -25,6 +25,7 @@
 <script>
 import axios from 'axios'
 import _ from 'lodash'
+const { assign } = Object
 const defaultConfig = {
   request: {}, // 请求的配置
   fields: {}, // 字段集
@@ -80,7 +81,7 @@ export default {
   },
   computed: {
     pagination () {
-      return Object.assign({}, defaultConfig.pagination, this.initPagination)
+      return assign({}, defaultConfig.pagination, this.initPagination)
     },
     request () {
       return _.cloneDeep(this.initRequest)
@@ -128,11 +129,11 @@ export default {
         [page]: this.pagination.page,
         [pageSize]: this.pagination.pageSize,
       }
-      this.request[key] = Object.assign({}, this.request[key], pagination)
+      this.request[key] = assign({}, this.request[key], pagination)
     },
     async getData () {
       try {
-        const {page, pageSize, code, apiSuccess, data: dataKey, total} = Object.assign({}, this.$tableConfig, this.initFields)
+        const {page, pageSize, code, apiSuccess, data: dataKey, total} = assign({}, this.$tableConfig, this.initFields)
         if (!(this.initRequest && this.initRequest.url && (apiSuccess || apiSuccess === 0))) return
         if (this.initPagination && page && pageSize) this.setPaginationToRequest(page, pageSize)
         this.loading = true
@@ -210,7 +211,7 @@ export default {
       margin-top: 20px;
     }
   }
-  .el-popover.popper {
+  .el-popper.popper {
     padding: 0;
   }
 </style>
