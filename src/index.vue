@@ -133,7 +133,7 @@ export default {
     },
     async getData () {
       try {
-        const {page, pageSize, code, apiSuccess, data: dataKey, total} = assign({}, this.$tableConfig, this.initFields)
+        const { page, pageSize, code, apiSuccess, data: dataKey, total } = assign({}, this.$tableConfig, this.initFields)
         if (!(this.initRequest && this.initRequest.url && (apiSuccess || apiSuccess === 0))) return
         if (this.initPagination && page && pageSize) this.setPaginationToRequest(page, pageSize)
         this.loading = true
