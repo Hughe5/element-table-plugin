@@ -1,5 +1,5 @@
 import elementTable from './index.vue'
-import { isPlainObj } from '/.utils'
+import { isPlainObj } from './utils'
 
 elementTable.install = function (Vue, options) {
   Vue.component(elementTable.name, elementTable)

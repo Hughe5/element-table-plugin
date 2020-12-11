@@ -4,12 +4,12 @@
       <el-table-column v-for="(item, index) in columns" :key="index" :align="item.align" :prop="item.prop" :label="item.label" :fixed="item.fixed" :width="item.width" :sortable="item.sortable">
         <template slot-scope="scope">
           <slot :name="item.prop" :row="scope.row">
-            <el-popover v-if="item.showOverflowPopover && scope.row[item.prop] !== undefined" width="400" popper-class="popper" trigger="hover" placement="top">
+            <el-popover v-if="item.showOverflowPopover && (scope.row[item.prop] || scope.row[item.prop] === 0)" width="400" popper-class="popper" trigger="hover" placement="top">
               <p style="margin-bottom: 12px;max-height: 160px;overflow: auto;padding: 12px">{{ scope.row[item.prop] }}</p>
               <el-button style="margin-left: 12px;margin-bottom: 12px" plain @click="copy(scope.row[item.prop])">复制文本</el-button>
               <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis" slot="reference">{{ scope.row[item.prop] }}</div>
             </el-popover>
-            <template v-else>{{ (scope.row[item.prop] === undefined) ? '—' : scope.row[item.prop] }}</template>
+            <template v-else>{{ scope.row[item.prop] || scope.row[item.prop] === 0 ? scope.row[item.prop] : '—' }}</template>
           </slot>
         </template>
       </el-table-column>
