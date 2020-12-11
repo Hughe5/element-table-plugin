@@ -25,7 +25,10 @@
 <script>
 import axios from 'axios'
 import _ from 'lodash'
+import { isPlainObj } from '/.utils'
+
 const { assign } = Object
+const { toString } = Object.prototype
 const defaultConfig = {
   request: {}, // 请求的配置
   fields: {}, // 字段集
@@ -37,6 +40,7 @@ const defaultConfig = {
     pageSize: 30,
   },
 }
+
 export default {
   name: 'element-table',
   props: {
@@ -104,13 +108,10 @@ export default {
         data,
       }
     },
-    isPlainObj (val) {
-      return Object.prototype.toString.call(val) === '[object Object]'
-    },
     getVal (str, initValue) {
       if (!str) return
       return str.split('.').reduce((obj, key, index, array) => {
-        if (index < array.length - 1 && !this.isPlainObj(obj[key])) {
+        if (index < array.length - 1 && !isPlainObj(obj[key])) {
           array.splice(index + 1)
         }
         return obj[key]
@@ -153,6 +154,7 @@ export default {
     },
     currentChange (val) {
       this.pagination.page = val
+      this.$emit('update:initPagination', this.pagination)
       this.getData()
     },
     copy (val) {
@@ -188,7 +190,6 @@ export default {
       .cell {
         display: flex;
         flex: none;
-        justify-content: center;
         align-items: center;
         white-space: nowrap;
         border-right: 1px solid #fff;
